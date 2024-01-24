@@ -11,7 +11,6 @@ function App() {
   let [pageNumber, setPageNumber] = useState(1);
   let [search, setSearch] = useState("");
 
-  console.log(pageNumber);
   let [fetchedData, updateFetchedData] = useState([]);
   let { info, results } = fetchedData
 
@@ -46,7 +45,7 @@ function App() {
         </div>
       </div>
 
-      <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} />
+      <Pagination info={info} pageNumber={pageNumber} setPageNumber={setPageNumber} />
     </div>
 
   );
