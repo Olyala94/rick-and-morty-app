@@ -6,20 +6,19 @@ import Filters from "./components/Filters/Filters";
 import Cards from "./components/Cards/Cards";
 
 function App() {
-  let [pageNumber, setPageNumber] = useState(5);
-let [fetchedData, updateFetchedData] = useState([]);
-let {info, results} = fetchedData
+  let [pageNumber, setPageNumber] = useState(1);
+  let [fetchedData, updateFetchedData] = useState([]);
+  let { info, results } = fetchedData
 
-console.log(results);
   let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}`;
 
-  useEffect(()=>{
-    (async function(){
-      let data = await fetch(api).then(res=>res.json())
+  useEffect(() => {
+    (async function () {
+      let data = await fetch(api).then(res => res.json())
       updateFetchedData(data);
-    })()
+    })();
 
-  },[api])
+  }, [api])
   return (
     <div className="App">
 
@@ -30,11 +29,11 @@ console.log(results);
       <div className="container">
         <div className="row">
           <div className="col-3">
-            <Filters/>
+            <Filters />
           </div>
           <div className="col-8">
             <div className="row">
-         <Cards></Cards>
+              <Cards results={results} />
             </div>
           </div>
         </div>
