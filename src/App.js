@@ -8,25 +8,31 @@ import Pagination from './components/Pagination/Pagination';
 import Search from './components/Search/Search';
 import Navbar from './components/Navbar/Navbar';
 
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Episodes from './Pages/Episodes';
 import Location from './Pages/Location';
 import Favorites from './Pages/Favorites';
 
+
 function App(){
   return(
-    <Router>
-      <div className='App'>
-      <Navbar/>
-      </div>
-     <Routes>
-      <Route path='/' element={<Home/>}></Route>
-      <Route path='/episodes' element={<Episodes/>}></Route>
-      <Route path='/location' element={<Location/>}></Route>
-      <Route path='/favoriteCharacters' element={<Favorites/>}></Route>
-     </Routes>
-    </Router>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+        <Navbar/>
+          <Routes>
+          <Route path='/' element={<Home/>}></Route>
+          <Route path='/episodes' element={<Episodes/>}></Route>
+          <Route path='/location' element={<Location/>}></Route>
+          <Route path="/favoriteCharacters" element={<Favorites/>} />
+          </Routes>
+        </Router>
+      </PersistGate>
+    </Provider>
   )
 }
 
@@ -41,6 +47,7 @@ const Home = () => {
   let { info, results } = fetchedData
 
   let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
+
 
   useEffect(() => {
     (async function () {
@@ -83,5 +90,5 @@ const Home = () => {
 
   );
 }
-
+export { store, persistor };
 export default App;
