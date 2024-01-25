@@ -10,11 +10,14 @@ import Search from './components/Search/Search';
 function App() {
   let [pageNumber, setPageNumber] = useState(1);
   let [search, setSearch] = useState("");
+  let [status, setStatus] = useState("");
+  let [gender, setGender] = useState("");
+  let [species, setSpecies] = useState("");
 
   let [fetchedData, updateFetchedData] = useState([]);
   let { info, results } = fetchedData
 
-  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}`;
+  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
 
   useEffect(() => {
     (async function () {
@@ -30,13 +33,21 @@ function App() {
         Rick & Morty <span className="text-primary">Wiki</span>
       </h1>
 
-      <Search setPageNumber={setPageNumber} setSearch={setSearch}></Search>
+      <Search
+        setPageNumber={setPageNumber}
+        setSearch={setSearch}>
+      </Search>
 
       <div className="container">
         <div className="row">
-          <div className="col-3">
-            <Filters />
-          </div>
+
+          <Filters
+            setSpecies={setSpecies}
+            setGender={setGender}
+            setStatus={setStatus}
+            setPageNumber={setPageNumber}
+          />
+
           <div className="col-8">
             <div className="row">
               <Cards results={results} />
@@ -45,7 +56,11 @@ function App() {
         </div>
       </div>
 
-      <Pagination info={info} pageNumber={pageNumber} setPageNumber={setPageNumber} />
+      <Pagination
+        info={info}
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
+      />
     </div>
 
   );
